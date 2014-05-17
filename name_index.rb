@@ -2,7 +2,7 @@ class NameIndex
 
   def self.create_index(names)
     patterns = {
-      'ア' => 'ア-オ',
+      'ア' => 'ア-オヴ',
       'カ' => 'カ-コ',
       'サ' => 'サ-ソ',
       'タ' => 'タ-ト',
