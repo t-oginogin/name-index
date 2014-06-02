@@ -1,7 +1,5 @@
 class NameIndex
-
-  def self.create_index(names)
-    patterns = {
+    PATTERNS = {
       'ア' => 'ア-オヴ',
       'カ' => 'カ-コ',
       'サ' => 'サ-ソ',
@@ -12,14 +10,15 @@ class NameIndex
       'ヤ' => 'ヤ-ヨ',
       'ラ' => 'ラ-ロ',
       'ワ' => 'ワヲン'
-    }
+    }.freeze
 
-    indexed_names = patterns.each_with_object({}) do |(key, value), indexed|
-      matched_names = names.each_with_object([]) do |name, matched|
-        matched << name if /\A([#{value}])/ =~ name
+  def self.create_index(names)
+
+    PATTERNS.each_with_object([]) do |(head_char, pattern), indexed|
+      matched_names = names.sort.select do |name|
+        /\A([#{pattern}])/ =~ name
       end
-      indexed[key] = matched_names.sort if matched_names.any?
+      indexed << [head_char, matched_names] if matched_names.any?
     end
-    indexed_names.to_a
   end
 end
